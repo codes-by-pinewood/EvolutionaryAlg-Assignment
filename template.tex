@@ -1,0 +1,253 @@
+\documentclass{article}
+\usepackage{arxiv}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}   
+\usepackage{pdfpages}% professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{siunitx}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{cite}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\newcommand{\note}[1]{\textbf{#1}}
+
+\title{Evolutionary Algorithms}
+
+
+\author{
+ Sherry Usman\\
+  4168216\\
+  \texttt{s.usman@umail.leidenuniv.nl}\\
+  %% examples of more authors
+   \And
+ Megan Mirnalini Sundaram Rajaraman\\
+  4018907\\
+  \texttt{m.m.s.rajaraman@umail.leidenuniv.nl} \\
+  %% \And
+ %% Name \\
+  %% Student number\\
+  %% \texttt{email address} \\
+  %% \AND
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+\maketitle
+ \begin{abstract}
+In this paper we explore three main problems (\emph{Low Autocorrelation Binary Sequences Problem}, \emph{N-Queens problem} and \emph{Katsuura problem}) and the various evolutionary strategies that can be used to solve them. For the first two problems we find a genetic algorithm and a set of hyper-parameters that are optimal for solving . For the \emph{Katsuura} problem,  we find an evolutionary algorithm.
+\end{abstract}
+
+
+% keywords can be removed
+%\keywords{First keyword \and Second keyword \and More}
+
+
+\section{Introduction}\label{sec:intro}
+In recent years, metaheuristic algorithms have increasingly become more practical in solving complex real-life in different fields such as logistics and economics, biology.  There are a number of different meta-heuristic algorithms such as single solution algorithms and population-based algorithms. In this paper we focus on population-based algorithms, especially Evolutionary Strategies. Evolutionary strategies are a class of metaheuristic algorithms that mimic the adaptive processes in biological evolution and in the real world. Taking inspiration from real-life biological processes, evolutionary algorithms use phenomena like reproduction, mutation, recombination and selection to iterate through a set of candidate solutions to find 'individuals' or solutions with the highest fitness. Like other optimization algorithms, evolutionary algorithms aim to find a solution with the highest fitness and with the highest convergence velocity. \\
+\section{Methods}
+\subsection{Genetic Algorithms}
+A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness with the sum of all probabilities being 1. The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms, the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in figure \ref{al:GA}.  As seen in the figure, the important parameters that need to be optimized are population size, mutation rate and crossover rate. \\
+In this paper we hope to implement a genetic algorithm that can solve two classical optimization problems: the LABS problem and the NQueens problem. \\ In the following sections we describe both these problems in detail.
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Termination}{Termination}
+
+\Input{Population size $N$, Crossover probability $p_c$, Mutation probability $p_m$, Number of generations or budget $B$}
+\Termination{The algorithm terminates when the maximum number of generations $B$ is reached or a stopping criterion is met.}
+\BlankLine
+
+Initialize population $P$\;
+Evaluate the fitness of the population $F(P)$\;
+\While{$t < B$ \textbf{and} stopping criterion not met}{
+    $P'(t) \leftarrow \text{MatingSelection}(P)$\;
+    $P''(t) \leftarrow \text{Crossover}(P'(t), p_c)$\;
+    $P'''(t) \leftarrow \text{Mutation}(P''(t), p_m)$\;
+    Evaluate the fitness of $P'''(t)$\;
+    Update population: $P \leftarrow P'''(t)$\;
+}
+\caption{Genetic Algorithm}\label{al:GA}
+\end{algorithm}
+
+\subsection{Evolutionary Algorithm}
+Another example of evolutionary strategies is Evolutionary Algorithms. Evolutionary algorithms are a subset of evolutionary strategies that emphasize on mutation, have self-adaptation, smaller population sizes, deterministic selection. \\
+Some of the components of an evolutionary algorithm include
+
+\section{Problem}
+\subsection{Low Auto-Correlation Binary Sequences}\label{sec:labs}
+Binary sequences are used in a variety of fields such as in radar applications, telecommunication and cryptography. 
+
+Low Auto-correlation Binary Sequences (LABS) problem is a problem to find a sequence $S = (s_1, s_2 ... s_N)$ with $ s_i = +-1$ such that the energy of the autocorrelation of the sequence is minimum or equivalently, the merit factor is maximum.  The autocorrelation of a sequence S is defined as 
+\begin{equation*}
+    C_k(S) = \sum_{i=1}^{N-k}s_is_{i+k}
+\end{equation*}
+for $k  = \{0,..,N-1\}$. The energy of the autocorrelation is defined by the equation: 
+
+\begin{equation*}
+    E(S) = \sum_{k=1}^{N-1}C_k^2(S)
+\end{equation*}
+
+Low Autocorrelation Binary Sequences (or LABS) are vital in the fields of  synchronization, active sensing systems, cryptography and radar application and communications engineering. An important example is in the field of telecommunication where sequences with low auto-correlation are used as modulation pulses in radar and sonar ranging. 
+
+\subsection{N Queens Problem}\label{sec:nqueens}
+The N-Queens problem is a classical optimization problem where the goal is to place $n$ queens in an $n \cdot n$   chessboard such that none of the queens attack each other. In any classical chess game a queen can move horizontally, diagonally and vertically. 
+
+\subsection{Katsuura}
+Katsuura global optimization problem is a multi-modal minimization problem. It can be represented as 
+\begin{equation*}
+     f_{Katsuura}(n, x) = \prod_{i=0}^{n-1} [1 + (i + 1) \sum_{k=1}^{d} [2^kx_i] 2^{-k}]
+\end{equation*}
+This 
+\section{Algorithms}
+\label{sec:imple}
+We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms.  
+
+
+
+
+\section{Hyper-parameter tuning}
+For the LABS and NQueens problem we explore a set of hyperparameters for population size, mutation rate and crossover rate.
+
+\subsection{Population Size}
+The population size determines the number of individuals in the initial population and also determines the number of individuals retained in each subsequent generation of the population. The size of population is an important consideration in a genetic algorithm as it prevents 
+
+\subsection{Crossover Rate}
+Crossover rate determines the number of crossover points selected in two parents.  
+
+\subsection{Mutation Rate}
+Mutation rate in a population determines the rate at which bits in the offspring are flipped to generate new candidate solutions. This parameter controls the rate of diversity of new offspring candidate solutions generated from a set of parents.  
+
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c}
+        \textbf{Hyperparameters} & \textbf{Values}  \\ \hline
+        \textbf{Population Size} & \{50, 100, 200, 1000\}  \\ \hline
+        \textbf{Mutation Rate}   & \{0.01, 0.1, 0.5\} \\ 
+        \textbf{Crossover Rate}  & \{0.5, 0.7, 0.9\} \\
+    \end{tabular}
+    \caption{Hyperparameters for tuning the LABS and NQueens Problem}
+    \label{tab:my_label}
+\end{table}
+
+
+\begin{algorithm}[!ht]
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Termination}{Termination}
+
+\Input{Alg.~\ref{al:GA}, a tuning budget $B$, and objective functions }
+\Termination{The algorithm terminates when..}
+\BlankLine
+
+\caption{Tuning procedure}\label{al:tuning}
+\end{algorithm}
+
+\section{Experimental Results}\label{sec:experi}
+
+% Description of the experiments and the results. Use the tables and figures generated from the IOHanalyzer. Make sure to present your results in a way that is convenient to the reader. \textbf{do not blindly include plots of all your experiments; try to combine information in figures and tables!} 
+
+% Figure \ref{fig:example} and \ref{fig:test} show examples of how to insert your figure in the report. Please also see the captions. Make sure you explain your figures properly in the captions.
+
+% \begin{figure}[h!]
+%  \begin{center}
+%  \includegraphics[width=0.95\textwidth]{example.png}
+%  \end{center}
+%  \caption{By $n\ln(n)$ normalized average optimization times for OneMax, for $n$ between 500 and 10 000. Displayed numbers are for $n = 10 000$ \cite{ye2019interpolating}.}
+%  \label{fig:example}
+% \end{figure}
+
+
+% \begin{figure}[h!]
+%  \begin{center}
+%  \includegraphics[width=0.95\textwidth]{best-so-far.png}
+%  \end{center}
+%  \caption{The fixed-target results of 11 algorithms. The figure is downloaded from IOHanalyzer.}
+%  \label{fig:test}
+% \end{figure}
+
+\section{Discussion and Conclusion}\label{sec:dis&res}
+
+%Summarize the results and conclude your report. If you would like to put the main conclusions discussions as lists in this part, you can see an example below.
+
+% \begin{enumerate}[1)]
+%     \item We suggest using population size $\mu=x$ for the genetic algorithm to solve the problem.
+    
+%     \item The genetic algorithm benefits from small mutation rates in solving the \textsc{NAS} problem. (Just an example, this may not be the truth.)
+    
+%     \item We observe that the evolution strategy benefits from comma selection for solving the \textsc{NAS} problem. (Again, just an example).
+% \end{enumerate}
+ 
+ \textbf{Tips:} Please put the references in the file \emph{references.bib} and cite them in the right line, like this \cite{hadash2018estimate}.
+
+\appendix
+\section{Appendix Title}
+\label{app:f18-runningtime}
+\includepdf[pages=-]{ERT-f18.pdf}
+
+
+\label{app:f23-runningtime}
+\includepdf[pages=-]{ERT-f23.pdf}
+
+
+\bibliographystyle{unsrt}  
+\bibliography{references}  
+
+
+\end{document}
+\section{Notes}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Screenshot 2024-12-04 at 9.26.37 PM.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+It also says for mutation rates only values >= 1/l and less than equals to 1/2 make sense
+Crossover is explorative and mutation is exploitative
+Outline your algorithms, algorithm parameters, and settings used for those parameters. 
+
+\begin{algorithm}[!ht]
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Termination}{Termination}
+
+\Input{Population size $\mu$\\Crossover probability $p_c$ \\etc.}
+\Termination{The algorithm terminates when..}
+\BlankLine
+
+Initialization\;
+
+\For{$i=1$ \KwTo $B$}{
+Selection\;
+Crossover\;
+Mutation\;
+}
+\caption{Genetic Algorithm}\label{al:GA}
+\end{algorithm}
+
+ 
+You can explain the implementation in various ways, as long as you make them clear and understandable. If you prefer to explain your algorithm in pseudo-code, you could find an example (Algorithm \ref{al:GA}). Please ensure the algorithm and the results are reproducible from your description. \note{Note that if we cannot get the same results using the codes you submit, the PA grade is 0.} You can fix the random seed during your experiment and provide it to us so that we can avoid the different results caused by randomization. 
