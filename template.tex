@@ -100,8 +100,7 @@ Some of the components of an evolutionary algorithm include
 
 \section{Problem}
 \subsection{Low Auto-Correlation Binary Sequences}\label{sec:labs}
-Binary sequences are used in a variety of fields such as in radar applications, telecommunication and cryptography. 
-
+Binary sequences are used in a variety of fields such as in radar applications, telecommunication and cryptography. \\
 Low Auto-correlation Binary Sequences (LABS) problem is a problem to find a sequence $S = (s_1, s_2 ... s_N)$ with $ s_i = +-1$ such that the energy of the autocorrelation of the sequence is minimum or equivalently, the merit factor is maximum.  The autocorrelation of a sequence S is defined as 
 \begin{equation*}
     C_k(S) = \sum_{i=1}^{N-k}s_is_{i+k}
@@ -111,11 +110,17 @@ for $k  = \{0,..,N-1\}$. The energy of the autocorrelation is defined by the equ
 \begin{equation*}
     E(S) = \sum_{k=1}^{N-1}C_k^2(S)
 \end{equation*}
-
-Low Autocorrelation Binary Sequences (or LABS) are vital in the fields of  synchronization, active sensing systems, cryptography and radar application and communications engineering. An important example is in the field of telecommunication where sequences with low auto-correlation are used as modulation pulses in radar and sonar ranging. 
+Low Autocorrelation Binary Sequences (or LABS) are vital in the fields of  synchronization, active sensing systems, cryptography and radar application and communications engineering \cite{9422706}. An important example is in the field of telecommunication where sequences with low auto-correlation are used as modulation pulses in radar and sonar ranging. It is also used in applications such as measurement of space-time curvature. \cite{Packebusch_2016}.\\
+Finding the LABS is a difficult computational and optimization problem. The exact solutions for the highest merit factors have been found and documented here \cite{Ukil_2010}. But as the evaluation increases, it exceeds the minimum energy level and that is why it is a complex optimization problem.\\
 
 \subsection{N Queens Problem}\label{sec:nqueens}
-The N-Queens problem is a classical optimization problem where the goal is to place $n$ queens in an $n \cdot n$   chessboard such that none of the queens attack each other. In any classical chess game a queen can move horizontally, diagonally and vertically. 
+The N-Queens problem is a classical optimization problem, This is a generalized formulization of the 8-Queens problem, which was proposed by the chess player Max Bezzel in 1848. where the goal is to place $n$ queens in an $n \cdot n$ chessboard such that none of the queens attack each other. In any classical chess game a queen can move horizontally, diagonally and vertically. \\ 
+The constraints of the N-Queens problem are mentioned below. 
+\begin{itemize}
+    \item Each row should have exactly one Queen. 
+    \item Each column should have exactly one Queen.
+    \item No two queens should be in the same diagonal.
+\end{itemize} \cite{n_queens}. 
 
 \subsection{Katsuura}
 Katsuura global optimization problem is a multi-modal minimization problem. It can be represented as 
@@ -126,7 +131,6 @@ This
 \section{Algorithms}
 \label{sec:imple}
 We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms.  
-
 
 
 
