@@ -7,7 +7,6 @@ from ioh import get_problem, logger, ProblemClass
 budget = 5000
 
 def n_crossover(p1, p2, size, n=2, crossover_rate = 0.5):
-
     if np.random.rand() > crossover_rate:
         # If not, just return the parents as children (no crossover)
         return p1, p2
@@ -73,10 +72,6 @@ def mutate(c, mutation_rate):
     return c
 
 def s4018907_s4168216_GA(problem: ioh.problem.PBO, init_pop_size: int, mutation_rate: float, crossover_rate: float, budget: int) -> None:
-    # initial_pop = ... make sure you randomly create the first population
-    #initial_pop_size = pop_size
-    # mutation_rate = 
-    #crossover_rate = 0.5
     population = []
     pop_fitness = []
 
@@ -99,6 +94,33 @@ def s4018907_s4168216_GA(problem: ioh.problem.PBO, init_pop_size: int, mutation_
         f2 = problem(mutated_c2)
         population.append(mutated_c1)
         population.append(mutated_c2)
+
+# def s4018907_s4168216_GA(init_pop_size: int, mutation_rate: float, crossover_rate: float, budget: int, _logger:ioh.iohcpp.logger.Analyzer,
+#                          problem_F18: ioh.problem.PBO, problem_F23: ioh.problem.PBO) -> None:
+#     population = []
+#     pop_fitness = []
+#     problems = [problem_F18, problem_F23]
+
+#     for problem in problems:
+#         for i in range(init_pop_size):
+#             # Initialization
+#             population.append(np.random.randint(2, size = problem.meta_data.n_variables))
+#             pop_fitness.append(problem(population[i]))
+
+#     # `problem.state.evaluations` counts the number of function evaluation automatically,
+#     # which is incremented by 1 whenever you call `problem(x)`.
+#     # You could also maintain a counter of function evaluations if you prefer.
+#         while problem.state.evaluations < budget:
+#             parents = mating_selection(population, pop_fitness)
+#             p1 = parents[0]
+#             p2 = parents[1]
+#             c1, c2 = n_crossover(p1, p2, problem.meta_data.n_variables, crossover_rate = crossover_rate)
+#             mutated_c1 = mutate(c1, mutation_rate)
+#             mutated_c2 = mutate(c2, mutation_rate)
+#             f1 = problem(mutated_c1)
+#             f2 = problem(mutated_c2)
+#             population.append(mutated_c1)
+#             population.append(mutated_c2)
 
 
 
