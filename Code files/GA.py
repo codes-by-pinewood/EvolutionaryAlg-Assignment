@@ -3,7 +3,6 @@ import numpy as np
 import ioh
 from ioh import get_problem, logger, ProblemClass
 
-
 budget = 5000
 
 def n_crossover(p1, p2, size, n=2, crossover_rate = 0.5):
@@ -95,35 +94,6 @@ def s4018907_s4168216_GA(problem: ioh.problem.PBO, init_pop_size: int, mutation_
         population.append(mutated_c1)
         population.append(mutated_c2)
 
-# def s4018907_s4168216_GA(init_pop_size: int, mutation_rate: float, crossover_rate: float, budget: int, _logger:ioh.iohcpp.logger.Analyzer,
-#                          problem_F18: ioh.problem.PBO, problem_F23: ioh.problem.PBO) -> None:
-#     population = []
-#     pop_fitness = []
-#     problems = [problem_F18, problem_F23]
-
-#     for problem in problems:
-#         for i in range(init_pop_size):
-#             # Initialization
-#             population.append(np.random.randint(2, size = problem.meta_data.n_variables))
-#             pop_fitness.append(problem(population[i]))
-
-#     # `problem.state.evaluations` counts the number of function evaluation automatically,
-#     # which is incremented by 1 whenever you call `problem(x)`.
-#     # You could also maintain a counter of function evaluations if you prefer.
-#         while problem.state.evaluations < budget:
-#             parents = mating_selection(population, pop_fitness)
-#             p1 = parents[0]
-#             p2 = parents[1]
-#             c1, c2 = n_crossover(p1, p2, problem.meta_data.n_variables, crossover_rate = crossover_rate)
-#             mutated_c1 = mutate(c1, mutation_rate)
-#             mutated_c2 = mutate(c2, mutation_rate)
-#             f1 = problem(mutated_c1)
-#             f2 = problem(mutated_c2)
-#             population.append(mutated_c1)
-#             population.append(mutated_c2)
-
-
-
 def create_problem(dimension: int, fid: int) -> Tuple[ioh.problem.PBO, ioh.logger.Analyzer]:
     # Declaration of problems to be tested.
     problem = get_problem(fid, dimension=dimension, instance=1, problem_class=ProblemClass.PBO)
@@ -145,11 +115,11 @@ def create_problem(dimension: int, fid: int) -> Tuple[ioh.problem.PBO, ioh.logge
 if __name__ == "__main__":
     # this how you run your algorithm with 20 repetitions/independent run
     # create the LABS problem and the data logger
-    # F18, _logger = create_problem(dimension=50, fid=18)
-    # for run in range(20): 
-    #     studentnumber1_studentnumber2_GA(F18)
-    #     F18.reset() # it is necessary to reset the problem after each independent run
-    # _logger.close() # after all runs, it is necessary to close the logger to make sure all data are written to the folder
+    F18, _logger = create_problem(dimension=50, fid=18)
+    for run in range(20): 
+        s4018907_s4168216_GA(F18)
+        F18.reset() # it is necessary to reset the problem after each independent run
+    _logger.close() # after all runs, it is necessary to close the logger to make sure all data are written to the folder
 
     # create the N-Queens problem and the data logger
     F23, _logger = create_problem(dimension=49, fid=23)
