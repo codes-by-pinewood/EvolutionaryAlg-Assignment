@@ -142,20 +142,22 @@ Low Autocorrelation Binary Sequences (or LABS) are vital in the fields of  synch
 Finding the LABS is a difficult computational and optimization problem. The exact solutions for the highest merit factors have been found and documented here \cite{Ukil_2010}. But as the evaluation increases, it exceeds the minimum energy level and that is why it is a complex optimization problem.\\
 
 \subsection{N Queens Problem}\label{sec:nqueens}
-The N-Queens problem is a classical optimization problem, This is a generalized formulization of the 8-Queens problem, which was proposed by the chess player Max Bezzel in 1848. where the goal is to place $n$ queens in an $n \cdot n$ chessboard such that none of the queens attack each other. In any classical chess game a queen can move horizontally, diagonally and vertically. \\ 
+The N-Queens problem is a classical optimization problem. This is a generalized formalization of the 8-Queens problem, which was proposed by the chess player Max Bezzel in 1848. The goal is to place $n$ queens in an $n \cdot n$ chessboard such that none of the queens attack each other. In any classical chess game, a queen can move horizontally, diagonally and vertically. \\ 
 The constraints of the N-Queens problem are mentioned below.  \cite{n_queens}
 \begin{itemize}
     \item Each row should have exactly one Queen. 
     \item Each column should have exactly one Queen.
     \item No two queens should be in the same diagonal.
-\end{itemize}. 
+\end{itemize}
+N-Queens Problem, along with LABS belong to PBO problem suite, which is defined as a set of 25 problems of  \textit{Pseudo-Boolean Optimization} nature \cite{IOHprofiler}. 
 
 \subsection{Katsuura Optimization Problem} \label{sec:katsuura}
 Katsuura global optimization problem is a multi-modal minimization problem. It can be represented as \cite{katsuura-source}
 \begin{equation*}
      f_{Katsuura}(n, x) = \frac{10}{D^2} \prod_{i=0}^{D} \left ( 1 + i \sum_{j=1}^{32} \frac{|2^jz_i- |2^j z_i||}{2^j} \right )^{10/D^{1.2}}-\frac{10}{D^2} + f_{pen}(x) + f_{opt}
 \end{equation*}
-This complex function forms one of the benchmarks of optimization. This function is part of the functions which were proposed by Hidefumi Katsuura \cite{katsuura-actualpaper}. It is described as \textit{continuous everywhere and differentiable nowhere} which means that this function is continuous, but has no well-defined slope, looking "rugged" \cite{rugged-boi}. This contributes to multiple local minima, thus making it a great problem for optimization and minimization. 
+This complex function forms one of the benchmarks of optimization. This function is part of the functions which were proposed by Hidefumi Katsuura \cite{katsuura-actualpaper}. It is described as \textit{continuous everywhere and differentiable nowhere} which means that this function is continuous, but has no well-defined slope, looking "rugged" \cite{rugged-boi}. This contributes to multiple local minima, thus making it a great problem for optimization and minimization. \\
+Katsuura is one of the problems in the BBOB  (\textit{Black Box Bayesian Optimization Benchmarking Suite}) test suite.
 
 \section{Experiments} \label{sec:exp-results}
 We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms, with a solution similar to the one discussed in \ref{alg:GA}. Similarly, for solving the Katsuura Optimization algorithm, a solution similar to the one discussed in \ref{alg:ES} was implemented.   \\
@@ -227,44 +229,48 @@ The figure \ref{fig:ert-labs}
 \includepdf[pages=-]{ERT-f23.pdf}\label{fig:ert-nqueens}
 
 \subsection{Katsuura Problem}
-\begin{figure}[h!]
+The results of the runs were examined and the results were graphed in  Figures\ref{fig:cumulative_distribution-Katsuura} - \ref{fig:shapley-katsuura}. Based on the experiments, the optimal hyperparameter settings were found to be \texttt{mutation\_rate = 0.01, crossover\_rate = 0.9 and population\_size = 20}.\\
+Figures \ref{fig:cumulative_distribution-Katsuura} and \ref{fig:emp_cumulative_distribution-Katsuura} refer to the Cumulative Distributions of the problem, with multiple hyperparameter sets. The function evaluations are taken against the proportion of runs for convergence, which shows the ECDF curves for each function setting. As seen from the figure, the optimal setting shows the maximal function value quicker. This is also seen in \ref{fig:emp_cumulative_distribution-Katsuura}
+ \begin{figure}[h!]
     \centering
     \includegraphics[width=1\linewidth]{Graphs/Katsuura/Cumulative_Distribution.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
+    \caption{ECDF Curves for various hyperparameter settings of the Katsuura Optimization function. The x-axis refers to the function evaluations, and the y-axis refers to the proportion of runs. Out of all the curves, the optimal settings seem to converge the quickest, with the highest maximal function value of all. }
+    \label{fig:cumulative_distribution-Katsuura}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\linewidth]{Graphs/Katsuura/Empirical_Cumulative_Distribution.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
+    \caption{ECDF Curves for various hyperparameter settings of the Katsuura Optimization function. The x-axis refers to the function evaluations, and the y-axis refers to the proportion of runs and targets evaluated in pairs. }
+    \label{fig:emp_cumulative_distribution-Katsuura}
+\end{figure}
+The next evaluation metric is the best fitness value and the expected runtime for the corresponding value. This is shown in Figures \ref{fig:ert-single-Katsuura} and \ref{fig:ert-multiple-Katsuura}, where the expected runtime is taken for a single and multiple functions respectively. For  figure\ref{fig:ert-multiple-Katsuura}, the mean of the running time samples is taken for evaluations. Although it is not clear in the beginning which function performs well, as the budget is depleted, it becomes clear that the optimal setting converges faster, and has a faster ERT than others. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Expected_RunTime.png}
+    \caption{Best value of the function against the budget for the evaluations. The x-axis refers to the function value, and the y-axis refers to the function evaluations (budget) of the problem. The optimal setting, while taking a lower fitness value in the beginning, outperforms others at the end of the given budget. }
+    \label{fig:ert-single-Katsuura}
 \end{figure}
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\linewidth]{Graphs/Katsuura/Expected_RunTime_Multi.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
+    \caption{Best value of the function against the expected run time (ERT) for the hyperparameter setting. The x-axis refers to the function value, and the y-axis refers to the ERT of said function. Here, it is evident that the optimal setting, while taking a lower fitness value in the beginning, outperforms others and converges faster (also seen in figure \ref{fig:ert-single-Katsuura}). }
+    \label{fig:ert-multiple-Katsuura}
 \end{figure}
 
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Expected_RunTime.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
-\end{figure}
+In addition to the expected runtime and ECDF curves, the ranking of the functions as well as the contributions of each function are plotted in \ref{fig:ranking-Katsuura} and \ref{fig:shapley-katsuura}. Figure \ref{fig:ranking-Katsuura} shows the ranking of the hyperparameter settings under a fixed-target setting. It is established that the optimal setting is the best, followed by four other settings at population size of 10 and 20. All functions of population size 50 are comparatively less optimal than the others, as they are ranked the same, and at the last. \\
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\linewidth]{Graphs/Katsuura/Ranking.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
+    \caption{Ranking of the function settings. The heatmap generated produces different rankings for each setting, which are marked in blue and red. The optimal settings are ordered and marked in blue, while the least optimal settings are marked in red. The optimal setting is ranked the first, followed by other settings of lower population sizes.}
+    \label{fig:ranking-Katsuura}
 \end{figure}
+Figure \ref{fig:shapley-katsuura} refers to the contribution of each setting to the portfolio. The spacing is taken as linear, and the permutation size of the groups and the functions are set to 3 and 20 respectively. This allows for a more accurate reading, as a lower permutation size for grouping is more accurate, while a higher permutation size for the functions allows to consider higher number of portfolios.  
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\linewidth]{Graphs/Katsuura/Shapley_Values.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \caption{Contribution of each setting to the portfolio. The x-axis refers to the function setting, while the y-axis refers to the shape/size of contribution. }
+    \label{fig:shapley-katsuura}
 \end{figure}
 
 
@@ -290,34 +296,3 @@ The figure \ref{fig:ert-labs}
 
 
 \end{document}
-\section{Notes}
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.4\linewidth]{Screenshot 2024-12-04 at 9.26.37 PM.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
-\end{figure}
-It also says for mutation rates only values >= 1/l and less than equals to 1/2 make sense
-Crossover is explorative and mutation is exploitative
-Outline your algorithms, algorithm parameters, and settings used for those parameters. 
-
-\begin{algorithm}[!ht]
-\SetAlgoLined
-\SetKwInOut{Input}{Input}\SetKwInOut{Termination}{Termination}
-
-\Input{Population size $\mu$\\Crossover probability $p_c$ \\etc.}
-\Termination{The algorithm terminates when..}
-\BlankLine
-
-Initialization\;
-
-\For{$i=1$ \KwTo $B$}{
-Selection\;
-Crossover\;
-Mutation\;
-}
-\caption{Genetic Algorithm}\label{al:GA}
-\end{algorithm}
-
- 
-You can explain the implementation in various ways, as long as you make them clear and understandable. If you prefer to explain your algorithm in pseudo-code, you could find an example (Algorithm \ref{al:GA}). Please ensure the algorithm and the results are reproducible from your description. \note{Note that if we cannot get the same results using the codes you submit, the PA grade is 0.} You can fix the random seed during your experiment and provide it to us so that we can avoid the different results caused by randomization. 
