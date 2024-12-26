@@ -58,7 +58,7 @@
 \begin{document}
 \maketitle
  \begin{abstract}
-In this paper we explore three main problems (\emph{Low Autocorrelation Binary Sequences Problem}, \emph{N-Queens problem} and \emph{Katsuura problem}) and the various evolutionary strategies that can be used to solve them. For the first two problems, we find a genetic algorithm and a set of hyper-parameters that are optimal for solving both problems. For the \emph{Katsuura} problem,  we find an evolutionary algorithm.
+In this paper we explore three main problems (\emph{Low Autocorrelation Binary Sequences Problem}, \emph{N-Queens problem} and \emph{Katsuura problem}) and the various evolutionary strategies that can be used to solve them. For the first two problems, we find a genetic algorithm and a set of hyper-parameters that are optimal for solving both problems. For the \emph{Katsuura} problem,  we find an evolutionary algorithm and experiment with the hyperparameters to find an optimal solution. 
 \end{abstract}
 
 
@@ -70,7 +70,7 @@ In this paper we explore three main problems (\emph{Low Autocorrelation Binary S
 In recent years, metaheuristic algorithms have increasingly become more practical in solving complex real-life in different fields such as logistics and economics, biology.  There are a number of different meta-heuristic algorithms such as single solution algorithms and population-based algorithms. Taking inspiration from real-life biological processes, Evolutionary Algorithms use phenomena like reproduction or recombination, mutation and selection to iterate through a set of candidate solutions to find 'individuals' or solutions with the highest fitness. In this paper we focus on population-based algorithms, especially Evolutionary Strategies and Genetic Algorithms. Like other optimization algorithms, evolutionary algorithms aim to find a solution with the highest fitness and with the highest convergence velocity. 
 \section{Methods}
 \subsection{Genetic Algorithms}
-A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness with the sum of all probabilities being 1. The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms, the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in figure \ref{al:GA}. As described, genetic algorithms are probabilistic in nature. \\
+A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness with the sum of all probabilities being 1. The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms, the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in figure \ref{alg:GA}. As described, genetic algorithms are probabilistic in nature. \\
 As seen in the figure, the important parameters that need to be optimized are population size, mutation rate and crossover rate. \\
 % In this paper we hope to implement a genetic algorithm that can solve two classical optimization problems: the LABS problem and the NQueens problem. \\ In the following sections we describe both these problems in detail.
 
@@ -157,10 +157,22 @@ Katsuura global optimization problem is a multi-modal minimization problem. It c
 \end{equation*}
 This complex function forms one of the benchmarks of optimization. This function is part of the functions which were proposed by Hidefumi Katsuura \cite{katsuura-actualpaper}. It is described as \textit{continuous everywhere and differentiable nowhere} which means that this function is continuous, but has no well-defined slope, looking "rugged" \cite{rugged-boi}. This contributes to multiple local minima, thus making it a great problem for optimization and minimization. 
 
-\section{Experiments and Results} \label{sec:exp-results}
-We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms.  
+\section{Experiments} \label{sec:exp-results}
+We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms, with a solution similar to the one discussed in \ref{alg:GA}. Similarly, for solving the Katsuura Optimization algorithm, a solution similar to the one discussed in \ref{alg:ES} was implemented.   \\
+The experiment was performed using \textit{IOHExperimenter}. \cite{IOHexperimenter}
 \subsection{Hyper-parameter tuning}
-For all three problems, a set of hyperparameters for population size, mutation rate and crossover rate have been explored to arrive at the optimal solution.
+For all three problems, a set of hyperparameters for population size, mutation rate and crossover rate have been explored to arrive at the optimal solution. A table discussing the settings has been given in Table \ref{tab:hyperparameter-tuning}. 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|} \hline 
+        \textbf{Hyperparameters} & \textbf{Values}  \\ \hline
+        \textbf{Population Size} & \{50, 100, 200, 1000\}  \\ \hline
+        \textbf{Mutation Rate}   & \{0.01, 0.1, 0.5\} \\ \hline  
+        \textbf{Crossover Rate}  & \{0.5, 0.7, 0.9\} \\ \hline
+    \end{tabular}
+    \caption{Hyperparameters for tuning the three problems}
+    \label{tab:hyperparameter-tuning}
+\end{table}
 
 \subsubsection{Population Size}
 The population size determines the number of individuals in the initial population and also determines the number of individuals retained in each subsequent generation of the population. The size of population is an important consideration in a genetic algorithm as it prevents 
@@ -170,18 +182,6 @@ Crossover rate determines the number of crossover points selected in two parents
 
 \subsubsection{Mutation Rate}
 Mutation rate in a population determines the rate at which bits in the offspring are flipped to generate new candidate solutions. This parameter controls the rate of diversity of new offspring candidate solutions generated from a set of parents.  
-\begin{table}[h!]
-    \centering
-    \begin{tabular}{|c|c|} \hline 
-        \textbf{Hyperparameters} & \textbf{Values}  \\ \hline
-        \textbf{Population Size} & \{50, 100, 200, 1000\}  \\ \hline
-        \textbf{Mutation Rate}   & \{0.01, 0.1, 0.5\} \\ \hline  
-        \textbf{Crossover Rate}  & \{0.5, 0.7, 0.9\} \\ \hline
-    \end{tabular}
-    \caption{Hyperparameters for tuning the LABS and NQueens Problem}
-    \label{tab:hyperparameter-tuning}
-\end{table}
-
 
 % \begin{algorithm}[!ht]
 % \SetAlgoLined
@@ -195,7 +195,8 @@ Mutation rate in a population determines the rate at which bits in the offspring
 % \end{algorithm}
 
 
-\section{Experimental Results}\label{sec:experi}
+\section{Results}\label{sec:results}
+The results were graphed using IOHAnalyzer \cite{IOHanalyzer} for the expected running time of each hyperparameter setting, 
 
 % Description of the experiments and the results. Use the tables and figures generated from the IOHanalyzer. Make sure to present your results in a way that is convenient to the reader. \textbf{do not blindly include plots of all your experiments; try to combine information in figures and tables!} 
 
@@ -217,6 +218,56 @@ Mutation rate in a population determines the rate at which bits in the offspring
 %  \caption{The fixed-target results of 11 algorithms. The figure is downloaded from IOHanalyzer.}
 %  \label{fig:test}
 % \end{figure}
+\subsection{LABS}
+The figure \ref{fig:ert-labs}
+\includepdf[pages=-]{ERT-f18.pdf}\label{fig:ert-labs}
+
+\subsection{N-Queens}
+\label{app:f23-runningtime}
+\includepdf[pages=-]{ERT-f23.pdf}\label{fig:ert-nqueens}
+
+\subsection{Katsuura Problem}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Cumulative_Distribution.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Empirical_Cumulative_Distribution.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Expected_RunTime_Multi.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Expected_RunTime.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Ranking.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Shapley_Values.png}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+
 
 \section{Discussion and Conclusion}\label{sec:dis&res}
 
@@ -232,16 +283,8 @@ Mutation rate in a population determines the rate at which bits in the offspring
  
  \textbf{Tips:} Please put the references in the file \emph{references.bib} and cite them in the right line, like this \cite{hadash2018estimate}.
 
-\appendix
-\section{Appendix Title}
-\label{app:f18-runningtime}
-\includepdf[pages=-]{ERT-f18.pdf}
 
-
-\label{app:f23-runningtime}
-\includepdf[pages=-]{ERT-f23.pdf}
-
-
+\clearpage
 \bibliographystyle{unsrt}  
 \bibliography{references}  
 
