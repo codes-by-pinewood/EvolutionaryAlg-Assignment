@@ -1,0 +1,16 @@
+{
+	"version": "0.3.18", 
+	"suite": "unknown_suite", 
+	"function_id": 23, 
+	"function_name": "Katsuura", 
+	"maximization": false, 
+	"algorithm": {"name": "evolution strategy", "info": "Practical assignment part2 of the EA course"},
+	"attributes": ["evaluations", "raw_y"],
+	"scenarios": [
+		{"dimension": 10,
+		"path": "data_f23_Katsuura/IOHprofiler_f23_DIM10.dat",
+		"runs": [
+			{"instance": 1, "evals": 10, "best": {"evals": 8, "y": 8.04088842094656, "x": [-3.6902419532333806, 4.557305093656552, -3.1446642438927275, -3.195102026562334, 2.9955191096217604, 4.099636070199553, -2.075909480308015, -2.798828790319269, -2.008679950662804, -0.3798353750064898]}}
+		]}
+	]
+}
