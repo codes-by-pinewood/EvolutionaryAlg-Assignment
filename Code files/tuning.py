@@ -11,35 +11,49 @@ hyperparameter_space = {
 }
 
 def tune_hyperparameters() -> List:
-    # You should decide/engineer the `score` youself, which is the tuning objective
-    best_score = float('inf')
+    best_score = float('-inf')
     best_params = None
-    # create the LABS problem and the data logger
-    F18, _logger = create_problem(dimension=50, fid=18)
-    # create the N-Queens problem and the data logger
-    F23, _logger = create_problem(dimension=49, fid=23)
-
     for pop_size in hyperparameter_space['population_size']:
         for mutation_rate in hyperparameter_space['mutation_rate']:
             for crossover_rate in hyperparameter_space['crossover_rate']:
-                score_f18 = s4018907_s4168216_GA(F18, pop_size, mutation_rate, crossover_rate, budget)
-                print(score_f18)
+
+                F18, _logger18 = create_problem(dimension=50, fid=18, name=f"pop_size={pop_size}_mr={mutation_rate}_cr={crossover_rate}")
+                F23, _logger23 = create_problem(dimension=49, fid=23, name=f"pop_size={pop_size}_mr={mutation_rate}_cr={crossover_rate}")
+
+                print("running hyperparameter tuning for ", pop_size, mutation_rate, crossover_rate)
+
+                print("Running GA on F18")
+                score_f18_1, score_f18_2 = s4018907_s4168216_GA(F18, pop_size, mutation_rate, crossover_rate, budget)
+                score_f18 = np.mean([score_f18_1, score_f18_2])
+                print("score for F18: ", score_f18)
+
                 F18.reset()
-                if score_f18 < best_score:
+
+                if score_f18 > best_score:
                     best_score = score_f18
+                    print("best score for F18: ", best_score)
                     best_params = [pop_size, mutation_rate, crossover_rate]
-                score_f23 = s4018907_s4168216_GA(F23, pop_size, mutation_rate, crossover_rate, budget)
-                print(score_f23)
+
+                print("Running GA on F23")
+                score_f23_1, score_f23_2 = s4018907_s4168216_GA(F23, pop_size, mutation_rate, crossover_rate, budget)
+                score_f23 = np.mean([score_f23_1, score_f23_2])
+                print("score for F23: ", score_f23)
+
                 F23.reset()
-                if score_f23 < best_score:
+
+                if score_f23 > best_score:
                     best_score = score_f23
+                    print("best score for F23: ", best_score)
                     best_params = [pop_size, mutation_rate, crossover_rate]
+
     return best_params
 
 
 if __name__ == "__main__":
-    # Hyperparameter tuning to determine the best parameters for both problems
-    population_size, mutation_rate, crossover_rate = tune_hyperparameters()
+
+    # Call the hyperparameter tuning function
+    best_params = tune_hyperparameters()
+    population_size, mutation_rate, crossover_rate = best_params
     print(population_size)
     print(mutation_rate)
     print(crossover_rate)

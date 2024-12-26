@@ -7,9 +7,7 @@ budget = 5000
 
 def n_crossover(p1, p2, size, n=2, crossover_rate = 0.5):
     if np.random.rand() > crossover_rate:
-        # If not, just return the parents as children (no crossover)
         return p1, p2
-
     split_positions = sorted(np.random.choice(range(size), n, replace=False))
     c1 = []
     c2 = []
@@ -28,21 +26,6 @@ def n_crossover(p1, p2, size, n=2, crossover_rate = 0.5):
     return c1,c2
 
 def mating_selection(population, pop_fitness):
-    # Using the tournament selection
-    # select_parent = []
-    # for i in range(len(parent)) :
-    #     pre_select = np.random.choice(len(parent_f),tournament_k,replace = False)
-    #     max_f = sys.float_info.min
-    #     for p in pre_select:
-    #         if parent_f[p] > max_f:
-    #             index = p
-    #             max_f = parent_f[p]
-    #     select_parent.append(parent[index].copy())
-    # return select_parent
-
-    # Using the proportional selection
-
-    # Plusing 0.001 to avoid dividing 0
     f_min = min(pop_fitness)
     f_sum = sum(pop_fitness) - (f_min - 0.001) * len(pop_fitness)
     
@@ -75,13 +58,9 @@ def s4018907_s4168216_GA(problem: ioh.problem.PBO, init_pop_size: int, mutation_
     pop_fitness = []
 
     for i in range(init_pop_size):
-        # Initialization
         population.append(np.random.randint(2, size = problem.meta_data.n_variables))
         pop_fitness.append(problem(population[i]))
-
-    # `problem.state.evaluations` counts the number of function evaluation automatically,
-    # which is incremented by 1 whenever you call `problem(x)`.
-    # You could also maintain a counter of function evaluations if you prefer.
+    
     while problem.state.evaluations < budget:
         parents = mating_selection(population, pop_fitness)
         p1 = parents[0]
@@ -94,17 +73,14 @@ def s4018907_s4168216_GA(problem: ioh.problem.PBO, init_pop_size: int, mutation_
         population.append(mutated_c1)
         population.append(mutated_c2)
 
-def create_problem(dimension: int, fid: int) -> Tuple[ioh.problem.PBO, ioh.logger.Analyzer]:
+def create_problem(dimension: int, fid: int, name:str) -> Tuple[ioh.problem.PBO, ioh.logger.Analyzer]:
     # Declaration of problems to be tested.
     problem = get_problem(fid, dimension=dimension, instance=1, problem_class=ProblemClass.PBO)
 
-    # Create default logger compatible with IOHanalyzer
-    # `root` indicates where the output files are stored.
-    # `folder_name` is the name of the folder containing all output. You should compress the folder 'run' and upload it to IOHanalyzer.
     l = logger.Analyzer(
         root="data",  # the working directory in which a folder named `folder_name` (the next argument) will be created to store data
-        folder_name="run",  # the folder name to which the raw performance data will be stored
-        algorithm_name="genetic_algorithm",  # name of your algorithm
+        folder_name="run_pbo",  # the folder name to which the raw performance data will be stored
+        algorithm_name=name,  # name of your algorithm
         algorithm_info="Practical assignment of the EA course",
     )
     # attach the logger to the problem

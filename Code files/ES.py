@@ -2,9 +2,6 @@ import numpy as np
 import ioh
 from ioh import get_problem, logger, ProblemClass
 from es_modules import ES_Modules
-# import ES_Modules
-
-# es_module = ES_Modules.ES_Modules()
 from typing import List, Tuple
 
 # Setting Budget and Dimensions
