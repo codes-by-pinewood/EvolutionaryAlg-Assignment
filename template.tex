@@ -58,7 +58,7 @@
 \begin{document}
 \maketitle
  \begin{abstract}
-In this paper we explore three main problems (\emph{Low Autocorrelation Binary Sequences Problem}, \emph{N-Queens problem} and \emph{Katsuura problem}) and the various evolutionary strategies that can be used to solve them. For the first two problems we find a genetic algorithm and a set of hyper-parameters that are optimal for solving . For the \emph{Katsuura} problem,  we find an evolutionary algorithm.
+In this paper we explore three main problems (\emph{Low Autocorrelation Binary Sequences Problem}, \emph{N-Queens problem} and \emph{Katsuura problem}) and the various evolutionary strategies that can be used to solve them. For the first two problems, we find a genetic algorithm and a set of hyper-parameters that are optimal for solving both problems. For the \emph{Katsuura} problem,  we find an evolutionary algorithm.
 \end{abstract}
 
 
@@ -67,11 +67,12 @@ In this paper we explore three main problems (\emph{Low Autocorrelation Binary S
 
 
 \section{Introduction}\label{sec:intro}
-In recent years, metaheuristic algorithms have increasingly become more practical in solving complex real-life in different fields such as logistics and economics, biology.  There are a number of different meta-heuristic algorithms such as single solution algorithms and population-based algorithms. In this paper we focus on population-based algorithms, especially Evolutionary Strategies. Evolutionary strategies are a class of metaheuristic algorithms that mimic the adaptive processes in biological evolution and in the real world. Taking inspiration from real-life biological processes, evolutionary algorithms use phenomena like reproduction, mutation, recombination and selection to iterate through a set of candidate solutions to find 'individuals' or solutions with the highest fitness. Like other optimization algorithms, evolutionary algorithms aim to find a solution with the highest fitness and with the highest convergence velocity. \\
+In recent years, metaheuristic algorithms have increasingly become more practical in solving complex real-life in different fields such as logistics and economics, biology.  There are a number of different meta-heuristic algorithms such as single solution algorithms and population-based algorithms. Taking inspiration from real-life biological processes, Evolutionary Algorithms use phenomena like reproduction or recombination, mutation and selection to iterate through a set of candidate solutions to find 'individuals' or solutions with the highest fitness. In this paper we focus on population-based algorithms, especially Evolutionary Strategies and Genetic Algorithms. Like other optimization algorithms, evolutionary algorithms aim to find a solution with the highest fitness and with the highest convergence velocity. 
 \section{Methods}
 \subsection{Genetic Algorithms}
-A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness with the sum of all probabilities being 1. The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms, the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in figure \ref{al:GA}.  As seen in the figure, the important parameters that need to be optimized are population size, mutation rate and crossover rate. \\
-In this paper we hope to implement a genetic algorithm that can solve two classical optimization problems: the LABS problem and the NQueens problem. \\ In the following sections we describe both these problems in detail.
+A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness with the sum of all probabilities being 1. The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms, the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in figure \ref{al:GA}. As described, genetic algorithms are probabilistic in nature. \\
+As seen in the figure, the important parameters that need to be optimized are population size, mutation rate and crossover rate. \\
+% In this paper we hope to implement a genetic algorithm that can solve two classical optimization problems: the LABS problem and the NQueens problem. \\ In the following sections we describe both these problems in detail.
 
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -81,7 +82,6 @@ In this paper we hope to implement a genetic algorithm that can solve two classi
 \Input{Population size $N$, Crossover probability $p_c$, Mutation probability $p_m$, Number of generations or budget $B$}
 \Termination{The algorithm terminates when the maximum number of generations $B$ is reached or a stopping criterion is met.}
 \BlankLine
-
 Initialize population $P$\;
 Evaluate the fitness of the population $F(P)$\;
 \While{$t < B$ \textbf{and} stopping criterion not met}{
@@ -91,14 +91,42 @@ Evaluate the fitness of the population $F(P)$\;
     Evaluate the fitness of $P'''(t)$\;
     Update population: $P \leftarrow P'''(t)$\;
 }
-\caption{Genetic Algorithm}\label{al:GA}
+\caption{Genetic Algorithm}\label{alg:GA}
+\end{algorithm}
+For solving the LABS and N-Queens problem,  n-point crossover is taken as the choice of crossover. 
+\subsection{Evolutionary Strategies}
+Another subset of evolutionary algorithms is Evolutionary Strategies. Evolutionary strategies are a class of metaheuristic algorithms that mimic the adaptive processes in biological evolution and in the real world. The idea of mimicking evolution for optimization was first borne in Germany, which was later developed by Ingo Rechenberg \cite{source_evo1} and Hans-Paul Schwefel \cite{source-evo2}. One of the key differences is that Evolutionary Strategies focus on real-valued search space $\mathbb{R}^n$. The selection is also deterministic in nature (the selection is between $(\mu, \lambda)$ or  $(\mu + \lambda)$. Another key difference is that evolutionary strategies emphasize on mutation. \\
+The below mentioned algorithm \ref{alg:ES} shows a generalized ES model. \\
+\begin{algorithm}[H]
+\SetAlgoLined
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Termination}{Termination}
+\Input{Population $P$, Number of generations or budget $B$} %, Crossover probability $p_c$, Mutation probability $p_m$,% 
+\Termination{The algorithm terminates when the budget $B$ is met}
+\BlankLine
+ t $\rightarrow 0 $ ;\\
+Initialize population $P$\;
+Evaluate the fitness of the population $P(t)$\;
+\While{$t < B$}{
+    $P'(t) \leftarrow \text{Recombine}(P (t), p_c)$\;
+    $P''(t) \leftarrow \text{Mutate}(P'(t), p_m)$\;
+    $P'''(t) \leftarrow \text{Select}(P''(t) \cup Q)$\; 
+    Evaluate the fitness of $P'''(t)$\;
+    Update population: $P (t+1) \leftarrow P'''(t)$\;
+    Update budget $t \leftarrow t + 1$\;
+}
+\caption{Generational Evolutionary Strategy Model}\label{alg:ES}
 \end{algorithm}
 
-\subsection{Evolutionary Algorithm}
-Another example of evolutionary strategies is Evolutionary Algorithms. Evolutionary algorithms are a subset of evolutionary strategies that emphasize on mutation, have self-adaptation, smaller population sizes, deterministic selection. \\
-Some of the components of an evolutionary algorithm include
+Unlike genetic algorithms which focus on schema processing, evolutionary strategies focus on convergence speed and are self-adaptive in mutation. The mutation here, is controlled by a scaling variable $\sigma$. $\sigma$ can be a single step size for all the values in the popultation, or can be adapted or scaled with respect to each of the values.  This is taken from the behavior of repair enzymes, mutator-genes, which increase with respect to the frequency, and this is done to maximise the progress and adapt the shape of the mutation to the local topology. \cite{hao-paper-evostrat} \\
+% For this problem, a self-adaptive ES is taken with the scaling factor given below. 
+% \begin{equation*}
+%  f (x) = \sum_{i=1}^{n} i x_i^2     
+% \end{equation*}
+For solving the Katsuura optimization problem, a mutation with normal noise added to it, has been implemented and intermediate recombination has been taken as the method of recombination. Intermediate recombination is done by taking the arithmetic mean of both parents, and is varied by the position taken.
 
 \section{Problem}
+Algorithm \ref{alg:GA} is used to solve the LABS problem (Section \ref{sec:labs}) and the N-Queens Problem (Section \ref{sec:nqueens}), while algorithm \ref{alg:ES} is used to solve the Katsuura problem. 
 \subsection{Low Auto-Correlation Binary Sequences}\label{sec:labs}
 Binary sequences are used in a variety of fields such as in radar applications, telecommunication and cryptography. \\
 Low Auto-correlation Binary Sequences (LABS) problem is a problem to find a sequence $S = (s_1, s_2 ... s_N)$ with $ s_i = +-1$ such that the energy of the autocorrelation of the sequence is minimum or equivalently, the merit factor is maximum.  The autocorrelation of a sequence S is defined as 
@@ -115,62 +143,57 @@ Finding the LABS is a difficult computational and optimization problem. The exac
 
 \subsection{N Queens Problem}\label{sec:nqueens}
 The N-Queens problem is a classical optimization problem, This is a generalized formulization of the 8-Queens problem, which was proposed by the chess player Max Bezzel in 1848. where the goal is to place $n$ queens in an $n \cdot n$ chessboard such that none of the queens attack each other. In any classical chess game a queen can move horizontally, diagonally and vertically. \\ 
-The constraints of the N-Queens problem are mentioned below. 
+The constraints of the N-Queens problem are mentioned below.  \cite{n_queens}
 \begin{itemize}
     \item Each row should have exactly one Queen. 
     \item Each column should have exactly one Queen.
     \item No two queens should be in the same diagonal.
-\end{itemize} \cite{n_queens}. 
+\end{itemize}. 
 
-\subsection{Katsuura}
-Katsuura global optimization problem is a multi-modal minimization problem. It can be represented as 
+\subsection{Katsuura Optimization Problem} \label{sec:katsuura}
+Katsuura global optimization problem is a multi-modal minimization problem. It can be represented as \cite{katsuura-source}
 \begin{equation*}
-     f_{Katsuura}(n, x) = \prod_{i=0}^{n-1} [1 + (i + 1) \sum_{k=1}^{d} [2^kx_i] 2^{-k}]
+     f_{Katsuura}(n, x) = \frac{10}{D^2} \prod_{i=0}^{D} \left ( 1 + i \sum_{j=1}^{32} \frac{|2^jz_i- |2^j z_i||}{2^j} \right )^{10/D^{1.2}}-\frac{10}{D^2} + f_{pen}(x) + f_{opt}
 \end{equation*}
-This 
-\section{Algorithms}
-\label{sec:imple}
+This complex function forms one of the benchmarks of optimization. This function is part of the functions which were proposed by Hidefumi Katsuura \cite{katsuura-actualpaper}. It is described as \textit{continuous everywhere and differentiable nowhere} which means that this function is continuous, but has no well-defined slope, looking "rugged" \cite{rugged-boi}. This contributes to multiple local minima, thus making it a great problem for optimization and minimization. 
+
+\section{Experiments and Results} \label{sec:exp-results}
 We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms.  
+\subsection{Hyper-parameter tuning}
+For all three problems, a set of hyperparameters for population size, mutation rate and crossover rate have been explored to arrive at the optimal solution.
 
-
-
-\section{Hyper-parameter tuning}
-For the LABS and NQueens problem we explore a set of hyperparameters for population size, mutation rate and crossover rate.
-
-\subsection{Population Size}
+\subsubsection{Population Size}
 The population size determines the number of individuals in the initial population and also determines the number of individuals retained in each subsequent generation of the population. The size of population is an important consideration in a genetic algorithm as it prevents 
 
-\subsection{Crossover Rate}
-Crossover rate determines the number of crossover points selected in two parents.  
+\subsubsection{Crossover Rate}
+Crossover rate determines the number of crossover points selected in two parents.
 
-\subsection{Mutation Rate}
+\subsubsection{Mutation Rate}
 Mutation rate in a population determines the rate at which bits in the offspring are flipped to generate new candidate solutions. This parameter controls the rate of diversity of new offspring candidate solutions generated from a set of parents.  
-
-
-
 \begin{table}[h!]
     \centering
-    \begin{tabular}{c|c}
+    \begin{tabular}{|c|c|} \hline 
         \textbf{Hyperparameters} & \textbf{Values}  \\ \hline
         \textbf{Population Size} & \{50, 100, 200, 1000\}  \\ \hline
-        \textbf{Mutation Rate}   & \{0.01, 0.1, 0.5\} \\ 
-        \textbf{Crossover Rate}  & \{0.5, 0.7, 0.9\} \\
+        \textbf{Mutation Rate}   & \{0.01, 0.1, 0.5\} \\ \hline  
+        \textbf{Crossover Rate}  & \{0.5, 0.7, 0.9\} \\ \hline
     \end{tabular}
     \caption{Hyperparameters for tuning the LABS and NQueens Problem}
-    \label{tab:my_label}
+    \label{tab:hyperparameter-tuning}
 \end{table}
 
 
-\begin{algorithm}[!ht]
-\SetAlgoLined
-\SetKwInOut{Input}{Input}\SetKwInOut{Termination}{Termination}
+% \begin{algorithm}[!ht]
+% \SetAlgoLined
+% \SetKwInOut{Input}{Input}\SetKwInOut{Termination}{Termination}
 
-\Input{Alg.~\ref{al:GA}, a tuning budget $B$, and objective functions }
-\Termination{The algorithm terminates when..}
-\BlankLine
+% \Input{Alg.~\ref{alg:ES}, a tuning budget $B$, and objective functions }
+% \Termination{The algorithm terminates when..}
+% \BlankLine
 
-\caption{Tuning procedure}\label{al:tuning}
-\end{algorithm}
+% \caption{Tuning procedure}\label{al:tuning}
+% \end{algorithm}
+
 
 \section{Experimental Results}\label{sec:experi}
 
