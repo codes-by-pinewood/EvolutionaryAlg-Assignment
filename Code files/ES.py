@@ -5,20 +5,20 @@ from es_modules import ES_Modules
 # import ES_Modules
 
 # es_module = ES_Modules.ES_Modules()
-from typing import List
+from typing import List, Tuple
 
 # Setting Budget and Dimensions
 budget = 50000
 dimension = 10
 
-def create_problem(dimension:int, fid: int):
+def create_problem(dimension: int, fid: int, name:str) -> Tuple[ioh.problem.PBO, ioh.logger.Analyzer]:
     problem = get_problem(fid, dimension=dimension, instance=1, problem_class=ProblemClass.BBOB)
-
+    print("creating problem")
     l = logger.Analyzer(
         root="data", 
-        folder_name="run",
-        algorithm_name="evolution strategy", 
-        algorithm_info="Practical assignment part2 of the EA course",
+        folder_name="run", 
+        algorithm_name= name, 
+        algorithm_info="Practical assignment of the EA course",
     )
     problem.attach_logger(l)
     return problem, l
@@ -55,16 +55,12 @@ def tune_hyperparameters() -> List:
     best_score = float('-inf')
     print("Running the problem")
     best_params = None
-
-    # create the Katsuura problem and the data logger
-    F23, _logger23 = create_problem(dimension=10, fid=23)
     
     for pop_size in hyperparameter_space['population_size']:
-        print("pop_size: ", pop_size)
         for mutation_rate in hyperparameter_space['mutation_rate']:
-            print("mutation_rate: ", mutation_rate)
             for crossover_rate in hyperparameter_space['crossover_rate']:
-                print("crossover_rate: ", crossover_rate)
+                F23, _logger = create_problem(dimension=10, fid=23, name=f"pop_size={pop_size}_mr={mutation_rate}_cr={crossover_rate}")
+                print("running hyperparameter tuning for ", pop_size, mutation_rate, crossover_rate)
                 score_f23 = s4018907_s4168216_ES(F23, pop_size, mutation_rate, crossover_rate, budget)
                 F23.reset()
                 print("F23 score is", score_f23)

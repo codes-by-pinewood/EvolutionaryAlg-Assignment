@@ -1,0 +1,16 @@
+{
+	"version": "0.3.18", 
+	"suite": "unknown_suite", 
+	"function_id": 23, 
+	"function_name": "Katsuura", 
+	"maximization": false, 
+	"algorithm": {"name": "pop_size=20_mr=0.05_cr=0.7", "info": "Practical assignment of the EA course"},
+	"attributes": ["evaluations", "raw_y"],
+	"scenarios": [
+		{"dimension": 10,
+		"path": "data_f23_Katsuura/IOHprofiler_f23_DIM10.dat",
+		"runs": [
+			{"instance": 1, "evals": 50005, "best": {"evals": 46795, "y": 0.8681317704264441, "x": [-0.45370781468400323, 0.5898194237122689, -1.993446939866682, -4.16093402605516, -1.880514765569778, 4.277621635682042, 0.24924496919198985, 0.2861465578149671, 3.092109212227493, -0.1610164106709675]}}
+		]}
+	]
+}
