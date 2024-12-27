@@ -67,11 +67,11 @@ In this paper we explore three main problems (\emph{Low Autocorrelation Binary S
 
 
 \section{Introduction}\label{sec:intro}
-In recent years, metaheuristic algorithms have increasingly become more practical in solving complex real-life in different fields such as logistics and economics, biology.  There are a number of different meta-heuristic algorithms such as single solution algorithms and population-based algorithms. Taking inspiration from real-life biological processes, Evolutionary Algorithms use phenomena like reproduction or recombination, mutation and selection to iterate through a set of candidate solutions to find 'individuals' or solutions with the highest fitness. In this paper we focus on population-based algorithms, especially Evolutionary Strategies and Genetic Algorithms. Like other optimization algorithms, evolutionary algorithms aim to find a solution with the highest fitness and with the highest convergence velocity. 
+In recent years, metaheuristic algorithms have increasingly become more practical in solving complex real-life in different fields such as logistics and economics, biology.  There are a number of different meta-heuristic algorithms such as single solution algorithms and population-based algorithms. Taking inspiration from real-life biological processes, Evolutionary Algorithms use phenomena like reproduction or recombination, mutation and selection to iterate through a set of candidate solutions to find \textit{"individuals"} or solutions with the highest fitness. In this paper we focus on population-based algorithms, especially Evolutionary Strategies and Genetic Algorithms to solve three problems - Low Auto-correlation Binary Sequences, N-Queens and Katsuura Optimization Problem. 
 \section{Methods}
 \subsection{Genetic Algorithms}
-A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness with the sum of all probabilities being 1. The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms, the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in figure \ref{alg:GA}. As described, genetic algorithms are probabilistic in nature. \\
-As seen in the figure, the important parameters that need to be optimized are population size, mutation rate and crossover rate. \\
+A subset of evolutionary strategies are genetic algorithms. Genetic algorithms are optimization algorithms that are inspired from Darwin's theory of survival of the fittest and natural selection. A typical GA process involves initializing a random population $P$ of $n$ chromosomes and evaluating the fitness of each chromosome using a fitness criterion or fitness function $F$. Then using fitness-proportional selection methods, a pair chromosomes $C_1$ and $C_2$ are chosen for mating based on their high fitness. The use of a fitness-proportional selection mechanism is an essential part of Genetic Algorithms as it ensures that chromosomes with higher fitness are more likely to be selected than chromosomes with lower fitness and vice versa. Examples of proportional selection methods include roulette wheel where each chromosome is assigned a certain probability proportional to their fitness (with the sum of all probabilities being 1). The chromosomes selected during this process are then mated and produce an offspring $O$. Then a crossover mechanism is applied to interpolate between the two parents to generate an offspring. There are many different types of crossover mechanisms like uniform crossover, n-point crossover with the most common being two-point crossover. Finally, a mutation operation is used to incorporate diversity into the chromosomes produced $O'$.  The new, mutated chromosomes are inserted into the population $P$. This process is repeated until an optimum solution is reached or the budget runs out. This algorithm is shown in detail in Algorithm \ref{alg:GA}. As described, genetic algorithms are probabilistic in nature. \\
+As understood from the algorithm \ref{alg:GA}, the important parameters that need to be optimized are population size, mutation rate and crossover rate. \\
 % In this paper we hope to implement a genetic algorithm that can solve two classical optimization problems: the LABS problem and the NQueens problem. \\ In the following sections we describe both these problems in detail.
 
 \begin{algorithm}[H]
@@ -95,7 +95,7 @@ Evaluate the fitness of the population $F(P)$\;
 \end{algorithm}
 For solving the LABS and N-Queens problem,  n-point crossover is taken as the choice of crossover. 
 \subsection{Evolutionary Strategies}
-Another subset of evolutionary algorithms is Evolutionary Strategies. Evolutionary strategies are a class of metaheuristic algorithms that mimic the adaptive processes in biological evolution and in the real world. The idea of mimicking evolution for optimization was first borne in Germany, which was later developed by Ingo Rechenberg \cite{source_evo1} and Hans-Paul Schwefel \cite{source-evo2}. One of the key differences is that Evolutionary Strategies focus on real-valued search space $\mathbb{R}^n$. The selection is also deterministic in nature (the selection is between $(\mu, \lambda)$ or  $(\mu + \lambda)$. Another key difference is that evolutionary strategies emphasize on mutation. \\
+Another subset of evolutionary algorithms is Evolutionary Strategies. Evolutionary strategies are a class of metaheuristic algorithms that mimic the adaptive processes in biological evolution and in the real world. The idea of mimicking evolution for optimization was first borne in Germany, which was later developed by Ingo Rechenberg \cite{source_evo1} and Hans-Paul Schwefel \cite{source-evo2}. One of the key differences is that Evolutionary Strategies focus on real-valued search space $\mathbb{R}^n$. The selection is also deterministic in nature (the selection is between $(\mu, \lambda)$ or  $(\mu + \lambda)$). Another key difference is that evolutionary strategies emphasize on mutation. \\
 The below mentioned algorithm \ref{alg:ES} shows a generalized ES model. \\
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -126,7 +126,7 @@ Unlike genetic algorithms which focus on schema processing, evolutionary strateg
 For solving the Katsuura optimization problem, a mutation with normal noise added to it, has been implemented and intermediate recombination has been taken as the method of recombination. Intermediate recombination is done by taking the arithmetic mean of both parents, and is varied by the position taken.
 
 \section{Problem}
-Algorithm \ref{alg:GA} is used to solve the LABS problem (Section \ref{sec:labs}) and the N-Queens Problem (Section \ref{sec:nqueens}), while algorithm \ref{alg:ES} is used to solve the Katsuura problem. 
+Algorithm \ref{alg:GA} is used to solve the LABS problem (Section \ref{sec:labs}) and the N-Queens Problem (Section \ref{sec:nqueens}), while algorithm \ref{alg:ES} is used to solve the Katsuura problem (Section \ref{sec:katsuura}). 
 \subsection{Low Auto-Correlation Binary Sequences}\label{sec:labs}
 Binary sequences are used in a variety of fields such as in radar applications, telecommunication and cryptography. \\
 Low Auto-correlation Binary Sequences (LABS) problem is a problem to find a sequence $S = (s_1, s_2 ... s_N)$ with $ s_i = +-1$ such that the energy of the autocorrelation of the sequence is minimum or equivalently, the merit factor is maximum.  The autocorrelation of a sequence S is defined as 
@@ -138,7 +138,7 @@ for $k  = \{0,..,N-1\}$. The energy of the autocorrelation is defined by the equ
 \begin{equation*}
     E(S) = \sum_{k=1}^{N-1}C_k^2(S)
 \end{equation*}
-Low Autocorrelation Binary Sequences (or LABS) are vital in the fields of  synchronization, active sensing systems, cryptography and radar application and communications engineering \cite{9422706}. An important example is in the field of telecommunication where sequences with low auto-correlation are used as modulation pulses in radar and sonar ranging. It is also used in applications such as measurement of space-time curvature. \cite{Packebusch_2016}.\\
+Low Autocorrelation Binary Sequences (or LABS) are vital in the fields of  synchronization, active sensing systems, cryptography and radar application and communications engineering \cite{LABS_Explanation}. An important example is in the field of telecommunication where sequences with low auto-correlation are used as modulation pulses in radar and sonar ranging. It is also used in applications such as measurement of space-time curvature. \cite{Packebusch_2016}.\\
 Finding the LABS is a difficult computational and optimization problem. The exact solutions for the highest merit factors have been found and documented here \cite{Ukil_2010}. But as the evaluation increases, it exceeds the minimum energy level and that is why it is a complex optimization problem.\\
 
 \subsection{N Queens Problem}\label{sec:nqueens}
@@ -152,12 +152,18 @@ The constraints of the N-Queens problem are mentioned below.  \cite{n_queens}
 N-Queens Problem, along with LABS belong to PBO problem suite, which is defined as a set of 25 problems of  \textit{Pseudo-Boolean Optimization} nature \cite{IOHprofiler}. 
 
 \subsection{Katsuura Optimization Problem} \label{sec:katsuura}
-Katsuura global optimization problem is a multi-modal minimization problem. It can be represented as \cite{katsuura-source}
+Katsuura global optimization problem is a multi-modal minimization problem \cite{katsuura-source}. It can be represented as 
 \begin{equation*}
      f_{Katsuura}(n, x) = \frac{10}{D^2} \prod_{i=0}^{D} \left ( 1 + i \sum_{j=1}^{32} \frac{|2^jz_i- |2^j z_i||}{2^j} \right )^{10/D^{1.2}}-\frac{10}{D^2} + f_{pen}(x) + f_{opt}
 \end{equation*}
-This complex function forms one of the benchmarks of optimization. This function is part of the functions which were proposed by Hidefumi Katsuura \cite{katsuura-actualpaper}. It is described as \textit{continuous everywhere and differentiable nowhere} which means that this function is continuous, but has no well-defined slope, looking "rugged" \cite{rugged-boi}. This contributes to multiple local minima, thus making it a great problem for optimization and minimization. \\
-Katsuura is one of the problems in the BBOB  (\textit{Black Box Bayesian Optimization Benchmarking Suite}) test suite.
+where 
+\begin{itemize}
+    \item $f_{opt}$ refers to the global optimum offset, and allows to adjust for the global minimum. 
+    \item $f_{pen}(x)$ refers to the penalty function, which penalizes infeasible solutions. 
+    \item $\frac{10}{D^2}$ acts as the scaling constant.  
+    \item $-\frac{10}{D^2}$ corrects for the bias.
+\end{itemize}
+This function is part of the functions which were proposed by Hidefumi Katsuura \cite{katsuura-actualpaper}. It is described as \textit{continuous everywhere and differentiable nowhere} which means that this function is continuous, but has no well-defined slope, looking "rugged" \cite{rugged-boi}. This contributes to multiple local minima, thus making it a great problem for optimization and minimization. This complex function forms one of the benchmarks of optimization, and is one of the problems in the BBOB  (\textit{Black Box Bayesian Optimization Benchmarking Suite}) test suite.  \\
 
 \section{Experiments} \label{sec:exp-results}
 We want to find a set of evolutionary algorithms that can find the solution to both the N-Queens problem and the LABS problem using the same set of hyperparameters and optimization techniques. Due to the nature of these two problems we decide to go with genetic algorithms, with a solution similar to the one discussed in \ref{alg:GA}. Similarly, for solving the Katsuura Optimization algorithm, a solution similar to the one discussed in \ref{alg:ES} was implemented.   \\
@@ -166,66 +172,60 @@ The experiment was performed using \textit{IOHExperimenter}. \cite{IOHexperiment
 For all three problems, a set of hyperparameters for population size, mutation rate and crossover rate have been explored to arrive at the optimal solution. A table discussing the settings has been given in Table \ref{tab:hyperparameter-tuning}. 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|c|c|} \hline 
-        \textbf{Hyperparameters} & \textbf{Values}  \\ \hline
-        \textbf{Population Size} & \{50, 100, 200, 1000\}  \\ \hline
-        \textbf{Mutation Rate}   & \{0.01, 0.1, 0.5\} \\ \hline  
-        \textbf{Crossover Rate}  & \{0.5, 0.7, 0.9\} \\ \hline
+    \begin{tabular}{|c|l|l|c|} \hline 
+         \textbf{Problem}
+&   \textbf{Population Size} &\textbf{Mutation Rate}   &\textbf{Crossover Rate}  \\ \hline
+         LABS
+&   \{50, 100, 200, 1000\}  &\{0.01, 0.1, 0.5\} &\{0.5, 0.7, 0.9\} \\ \hline
+         N-Queens
+&   \{50, 100, 200, 1000\}  &\{0.01, 0.1, 0.5\} &\{0.5, 0.7, 0.9\} \\ \hline  
+         Katsuura&       \{10, 20, 50\}&\{0.01, 0.1, 0.5\} &\{0.5, 0.7, 0.9\} \\ \hline
     \end{tabular}
     \caption{Hyperparameters for tuning the three problems}
     \label{tab:hyperparameter-tuning}
 \end{table}
 
 \subsubsection{Population Size}
-The population size determines the number of individuals in the initial population and also determines the number of individuals retained in each subsequent generation of the population. The size of population is an important consideration in a genetic algorithm as it prevents 
+The population size determines the number of individuals in the initial population and also determines the number of individuals retained in each subsequent generation of the population. The size of population is an important consideration in a genetic algorithm, as it directly influences the ability of the algorithm to search for an optimal solution. \cite{RAJAKUMAR2013288}. Having a larger population allows for better accuracy at reaching the optimal solution, and faster convergence. The effects of population size on genetic algorithms and evolutionary strategies are also studied, as it is established that evolutionary strategies work best with small population sizes, whereas genetic algorithms work with larger population sizes.  \\
+As solving LABS and N-Queens are done with a genetic algorithm, the population size hyperparameter is set much higher than that of Katsuura (which is done using an evolutionary strategy). 
 
 \subsubsection{Crossover Rate}
-Crossover rate determines the number of crossover points selected in two parents.
+Crossover rate determines the number of crossover points selected in two parents. It also determines if the parent population undergoes crossover or not, with $p_c$ being the probability of the crossover happening. This allows to introduce variability into the population. The probability $p_c$ is varied with different values to study the effect on the convergence speed and accuracy of the solution. 
 
 \subsubsection{Mutation Rate}
-Mutation rate in a population determines the rate at which bits in the offspring are flipped to generate new candidate solutions. This parameter controls the rate of diversity of new offspring candidate solutions generated from a set of parents.  
+Mutation rate in a population determines the rate at which bits in the offspring are flipped to generate new candidate solutions. This parameter controls the rate of diversity of new offspring candidate solutions generated from a set of parents. For genetic algorithms, mutation entails random bit flipping from 0 to 1. While for evolutionary strategies, it can be a self-adaptive mutation with a single step size or individual step sizes. The optimal mutation rate $p^*$ has a direct influence on the convergence velocity of the solution, which is also studied in this experiment. 
 
-% \begin{algorithm}[!ht]
-% \SetAlgoLined
-% \SetKwInOut{Input}{Input}\SetKwInOut{Termination}{Termination}
+\subsection{Dimensions and Budget}
+Setting the dimensions and budget play a direct role in arriving at the optimal solution. A large enough budget allows for more exploration, while it could increase the computational workload. The dimensions of the problems have to be carefully set, as they have a direct influence on the population size. The parameters of the dimensions and budget for the problems are tabulated below in Table \ref{tab:dim-budget}.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l||c|c|} \hline 
+          \textbf{Problem}&\textbf{Dimensions}&  \textbf{Budget}\\ \hline 
+          LABS&50& 
+     1000000\\ \hline
+ N-Queens& 49&1000000\\\hline
+ Katsuura& 10&50000\\\hline\end{tabular}
+    \caption{Dimensions and Budgets for the Problems}
+    \label{tab:dim-budget}
+\end{table}
 
-% \Input{Alg.~\ref{alg:ES}, a tuning budget $B$, and objective functions }
-% \Termination{The algorithm terminates when..}
-% \BlankLine
-
-% \caption{Tuning procedure}\label{al:tuning}
-% \end{algorithm}
-
+\subsection{Fitness Function}
+Evaluating the fitness of an individual is a crucial step in evolutionary algorithms, as it helps decide the population for the next iteration, thereby influencing the solution. It has a direct influence on the selective pressure, which decides the individual(s) for crossover and mutation.  A higher selective pressure means that fitter individuals are carried over, whereas a lower selective pressure means that there is variability and diversity in the population, but can lead to slower convergence. As IOHExperimenter is used for this experiment, each mutated/recombined child is evaluated and ranked based on the fitness of the individual. 
 
 \section{Results}\label{sec:results}
-The results were graphed using IOHAnalyzer \cite{IOHanalyzer} for the expected running time of each hyperparameter setting, 
+The results were graphed using IOHAnalyzer \cite{IOHanalyzer} for the expected running time of each hyperparameter setting. 
 
-% Description of the experiments and the results. Use the tables and figures generated from the IOHanalyzer. Make sure to present your results in a way that is convenient to the reader. \textbf{do not blindly include plots of all your experiments; try to combine information in figures and tables!} 
-
-% Figure \ref{fig:example} and \ref{fig:test} show examples of how to insert your figure in the report. Please also see the captions. Make sure you explain your figures properly in the captions.
-
-% \begin{figure}[h!]
-%  \begin{center}
-%  \includegraphics[width=0.95\textwidth]{example.png}
-%  \end{center}
-%  \caption{By $n\ln(n)$ normalized average optimization times for OneMax, for $n$ between 500 and 10 000. Displayed numbers are for $n = 10 000$ \cite{ye2019interpolating}.}
-%  \label{fig:example}
-% \end{figure}
-
-
-% \begin{figure}[h!]
-%  \begin{center}
-%  \includegraphics[width=0.95\textwidth]{best-so-far.png}
-%  \end{center}
-%  \caption{The fixed-target results of 11 algorithms. The figure is downloaded from IOHanalyzer.}
-%  \label{fig:test}
-% \end{figure}
 \subsection{LABS}
-The figure \ref{fig:ert-labs}
+The figure \ref{fig:ert-labs} shows the expected running time of the LABS problem. The algorithm was run for the budget as mentioned in Table \ref{tab:dim-budget}, and the results were graphed here.  The x-axis refers to the best so far value (which is determined by the fitness score), and the y-axis refers to the function evaluations. \\
+From the figure, it is unclear which setting performs well, as all hyperparameter settings perform equally well.  Perhaps, it can be concluded that all settings performed equally well, as there seems to be no discernible difference between the settings. 
+
+
+\subsection{N-Queens} \label{app:f23-runningtime}
+The figure \ref{fig:ert-nqueens} shows the expect running time of the N-Queens Problem. The algorithm was run for the budget as mentioned in Table \ref{tab:dim-budget} and the results were measured. The x-axis considers the best so far value, and the y-axis refers to the function evaluations. \\
+From the figure, it is seen that all the hyperparameter settings take a while for learning (as the value is flat for a bit before starting to converge). Although all settings perform similar to each other, it is seen that a population size of 20 with a mutation rate of 0.05, and crossover rate of 0.9 seems to perform better than others. 
+
 \includepdf[pages=-]{ERT-f18.pdf}\label{fig:ert-labs}
 
-\subsection{N-Queens}
-\label{app:f23-runningtime}
 \includepdf[pages=-]{ERT-f23.pdf}\label{fig:ert-nqueens}
 
 \subsection{Katsuura Problem}
@@ -261,21 +261,65 @@ The next evaluation metric is the best fitness value and the expected runtime fo
 In addition to the expected runtime and ECDF curves, the ranking of the functions as well as the contributions of each function are plotted in \ref{fig:ranking-Katsuura} and \ref{fig:shapley-katsuura}. Figure \ref{fig:ranking-Katsuura} shows the ranking of the hyperparameter settings under a fixed-target setting. It is established that the optimal setting is the best, followed by four other settings at population size of 10 and 20. All functions of population size 50 are comparatively less optimal than the others, as they are ranked the same, and at the last. \\
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Ranking.png}
+    \includegraphics[width=0.9\linewidth]{Graphs/Katsuura/Ranking.png}
     \caption{Ranking of the function settings. The heatmap generated produces different rankings for each setting, which are marked in blue and red. The optimal settings are ordered and marked in blue, while the least optimal settings are marked in red. The optimal setting is ranked the first, followed by other settings of lower population sizes.}
     \label{fig:ranking-Katsuura}
 \end{figure}
-Figure \ref{fig:shapley-katsuura} refers to the contribution of each setting to the portfolio. The spacing is taken as linear, and the permutation size of the groups and the functions are set to 3 and 20 respectively. This allows for a more accurate reading, as a lower permutation size for grouping is more accurate, while a higher permutation size for the functions allows to consider higher number of portfolios.  
+Figure \ref{fig:shapley-katsuura} refers to the contribution of each setting to the portfolio. The spacing is taken as linear, and the permutation size of the groups and the functions are set to 3 and 20 respectively. This allows for a more accurate reading, as a lower permutation size for grouping is more accurate, while a higher permutation size for the functions allows to consider higher number of portfolios. 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=1\linewidth]{Graphs/Katsuura/Shapley_Values.png}
+    \includegraphics[width=0.9\linewidth]{Graphs/Katsuura/Shapley_Values.png}
     \caption{Contribution of each setting to the portfolio. The x-axis refers to the function setting, while the y-axis refers to the shape/size of contribution. }
     \label{fig:shapley-katsuura}
-\end{figure}
+\end{figure}\\In addition to this, the AUC values for the hyperparameter settings are also measured and tabulated in Table \ref{tab:AUC-Katsuura}.
 
-
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{ID} & \textbf{Hyperparameter Setting} & \textbf{x} & \textbf{auc} \\ \hline
+1  & pop\_size=10\_mr=0.01\_cr=0.5 & 50057 & 0.98977166030725 \\ \hline
+2  & pop\_size=10\_mr=0.01\_cr=0.7 & 50057 & 0.98977166030725 \\ \hline
+3  & pop\_size=20\_mr=0.01\_cr=0.7 & 50057 & 0.98977166030725 \\ \hline
+4  & pop\_size=20\_mr=0.01\_cr=0.9 & 50057 & 0.98977166030725 \\ \hline
+5  & pop\_size=20\_mr=0.05\_cr=0.5 & 50057 & 0.98977166030725 \\ \hline
+6  & pop\_size=20\_mr=0.05\_cr=0.7 & 50057 & 0.98977166030725 \\ \hline
+7  & pop\_size=20\_mr=0.05\_cr=0.9 & 50057 & 0.98977166030725 \\ \hline
+8  & pop\_size=20\_mr=0.1\_cr=0.5  & 50057 & 0.98977166030725 \\ \hline
+9  & pop\_size=20\_mr=0.1\_cr=0.7  & 50057 & 0.98977166030725 \\ \hline
+10 & pop\_size=20\_mr=0.1\_cr=0.9  & 50057 & 0.98977166030725 \\ \hline
+11 & pop\_size=50\_mr=0.01\_cr=0.5 & 50057 & 0.98977166030725 \\ \hline
+12 & pop\_size=50\_mr=0.01\_cr=0.7 & 50057 & 0.98977166030725 \\ \hline
+13 & pop\_size=10\_mr=0.01\_cr=0.9 & 50057 & 0.98977166030725 \\ \hline
+14 & pop\_size=50\_mr=0.01\_cr=0.9 & 50057 & 0.98977166030725 \\ \hline
+15 & pop\_size=50\_mr=0.05\_cr=0.5 & 50057 & 0.98977166030725 \\ \hline
+16 & pop\_size=50\_mr=0.05\_cr=0.7 & 50057 & 0.98977166030725 \\ \hline
+17 & pop\_size=50\_mr=0.05\_cr=0.9 & 50057 & 0.98977166030725 \\ \hline
+18 & pop\_size=50\_mr=0.1\_cr=0.5  & 50057 & 0.98977166030725 \\ \hline
+19 & pop\_size=50\_mr=0.1\_cr=0.7  & 50057 & 0.98977166030725 \\ \hline
+20 & pop\_size=50\_mr=0.1\_cr=0.9  & 50057 & 0.98977166030725 \\ \hline
+21 & pop\_size=10\_mr=0.05\_cr=0.5 & 50057 & 0.98977166030725 \\ \hline
+22 & pop\_size=10\_mr=0.05\_cr=0.7 & 50057 & 0.98977166030725 \\ \hline
+23 & pop\_size=10\_mr=0.05\_cr=0.9 & 50057 & 0.98977166030725 \\ \hline
+24 & pop\_size=10\_mr=0.1\_cr=0.5  & 50057 & 0.98977166030725 \\ \hline
+25 & pop\_size=10\_mr=0.1\_cr=0.7  & 50057 & 0.98977166030725 \\ \hline
+26 & pop\_size=10\_mr=0.1\_cr=0.9  & 50057 & 0.98977166030725 \\ \hline
+27 & pop\_size=20\_mr=0.01\_cr=0.5 & 50057 & 0.98977166030725 \\ \hline
+\end{tabular}
+\caption{Summary of hyperparameter settings with the function evaluations and the AUC values.}
+\label{tab:AUC-Katsuura}
+\end{table}
+\clearpage
 
 \section{Discussion and Conclusion}\label{sec:dis&res}
+The observations from the experiments are listed below. 
+\begin{enumerate}
+    \item A smaller population size seems to work better for the Katsuura optimization problem, as the optimal population size was found to be 20.
+    \item Although bigger population sizes seem to benefit genetic algorithms, a population size of 50 performed well for the N-Queens problem. 
+    \item A higher crossover probability rate seemed to be most beneficial, as all optimal solutions had a crossover probability rate of 0.9.
+    \item On the contrary, a lower mutation rate helped explore the local minima, as a mutation rate of 0.01 was helpful in finding the optimal setting. 
+    \item We also observed that 2-point crossover benefits the \textsc{LABS} and \textsc{N-Queens} problem. 
+\end{enumerate}
 
 %Summarize the results and conclude your report. If you would like to put the main conclusions discussions as lists in this part, you can see an example below.
 
@@ -287,7 +331,7 @@ Figure \ref{fig:shapley-katsuura} refers to the contribution of each setting to 
 %     \item We observe that the evolution strategy benefits from comma selection for solving the \textsc{NAS} problem. (Again, just an example).
 % \end{enumerate}
  
- \textbf{Tips:} Please put the references in the file \emph{references.bib} and cite them in the right line, like this \cite{hadash2018estimate}.
+ % \textbf{Tips:} Please put the references in the file \emph{references.bib} and cite them in the right line, like this \cite{hadash2018estimate}.
 
 
 \clearpage
